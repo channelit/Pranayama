@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 90;
 	objects = {
 
 /* Begin PBXContainerItemProxy section */
@@ -63,24 +63,18 @@
 /* Begin PBXFrameworksBuildPhase section */
 		2A1A64FA2D67FED60076E2C4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2A1A650E2D67FED70076E2C4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2A1A65182D67FED70076E2C4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
@@ -94,6 +88,7 @@
 				2A1A64FE2D67FED60076E2C4 /* Products */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 0;
 		};
 		2A1A64FE2D67FED60076E2C4 /* Products */ = {
 			isa = PBXGroup;
@@ -118,14 +113,10 @@
 			);
 			buildRules = (
 			);
-			dependencies = (
-			);
 			fileSystemSynchronizedGroups = (
 				2A1A64FF2D67FED60076E2C4 /* Pranayama */,
 			);
 			name = Pranayama;
-			packageProductDependencies = (
-			);
 			productName = Pranayama;
 			productReference = 2A1A64FD2D67FED60076E2C4 /* Pranayama.app */;
 			productType = "com.apple.product-type.application";
@@ -147,8 +138,6 @@
 				2A1A65142D67FED70076E2C4 /* PranayamaTests */,
 			);
 			name = PranayamaTests;
-			packageProductDependencies = (
-			);
 			productName = PranayamaTests;
 			productReference = 2A1A65112D67FED70076E2C4 /* PranayamaTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -170,8 +159,6 @@
 				2A1A651E2D67FED70076E2C4 /* PranayamaUITests */,
 			);
 			name = PranayamaUITests;
-			packageProductDependencies = (
-			);
 			productName = PranayamaUITests;
 			productReference = 2A1A651B2D67FED70076E2C4 /* PranayamaUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -183,8 +170,10 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
+				CLASSPREFIX = CITS;
 				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 2620;
+				ORGANIZATIONNAME = "Channel IT Services, LLC";
 				TargetAttributes = {
 					2A1A64FC2D67FED60076E2C4 = {
 						CreatedOnToolsVersion = 16.2;
@@ -208,7 +197,7 @@
 			);
 			mainGroup = 2A1A64F42D67FED60076E2C4;
 			minimizedProjectReferenceProxies = 1;
-			preferredProjectObjectVersion = 77;
+			preferredProjectObjectVersion = 90;
 			productRefGroup = 2A1A64FE2D67FED60076E2C4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -223,48 +212,36 @@
 /* Begin PBXResourcesBuildPhase section */
 		2A1A64FB2D67FED60076E2C4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2A1A650F2D67FED70076E2C4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2A1A65192D67FED70076E2C4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2A1A64F92D67FED60076E2C4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2A1A650D2D67FED70076E2C4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2A1A65172D67FED70076E2C4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
@@ -282,15 +259,17 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		2A1A65252D67FED70076E2C4 /* Debug */ = {
+		2A1A65252D67FED70076E2C4 /* Debug configuration for PBXNativeTarget "Pranayama" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Pranayama/Pranayama.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Pranayama/Preview Content\"";
+				DEVELOPMENT_TEAM = 6ENEJ8H885;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
@@ -308,21 +287,24 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = CITS.Pranayama;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		2A1A65262D67FED70076E2C4 /* Release */ = {
+		2A1A65262D67FED70076E2C4 /* Release configuration for PBXNativeTarget "Pranayama" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Pranayama/Pranayama.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Pranayama/Preview Content\"";
+				DEVELOPMENT_TEAM = 6ENEJ8H885;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
@@ -340,13 +322,14 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = CITS.Pranayama;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
-		2A1A65272D67FED70076E2C4 /* Debug */ = {
+		2A1A65272D67FED70076E2C4 /* Debug configuration for PBXProject "Pranayama" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -410,7 +393,7 @@
 			};
 			name = Debug;
 		};
-		2A1A65282D67FED70076E2C4 /* Release */ = {
+		2A1A65282D67FED70076E2C4 /* Release configuration for PBXProject "Pranayama" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -460,6 +443,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -467,7 +451,7 @@
 			};
 			name = Release;
 		};
-		2A1A652A2D67FED70076E2C4 /* Debug */ = {
+		2A1A652A2D67FED70076E2C4 /* Debug configuration for PBXNativeTarget "PranayamaTests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -485,7 +469,7 @@
 			};
 			name = Debug;
 		};
-		2A1A652B2D67FED70076E2C4 /* Release */ = {
+		2A1A652B2D67FED70076E2C4 /* Release configuration for PBXNativeTarget "PranayamaTests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -503,7 +487,7 @@
 			};
 			name = Release;
 		};
-		2A1A652D2D67FED70076E2C4 /* Debug */ = {
+		2A1A652D2D67FED70076E2C4 /* Debug configuration for PBXNativeTarget "PranayamaUITests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -519,7 +503,7 @@
 			};
 			name = Debug;
 		};
-		2A1A652E2D67FED70076E2C4 /* Release */ = {
+		2A1A652E2D67FED70076E2C4 /* Release configuration for PBXNativeTarget "PranayamaUITests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -541,37 +525,33 @@
 		2A1A64F82D67FED60076E2C4 /* Build configuration list for PBXProject "Pranayama" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				2A1A65272D67FED70076E2C4 /* Debug */,
-				2A1A65282D67FED70076E2C4 /* Release */,
+				2A1A65272D67FED70076E2C4 /* Debug configuration for PBXProject "Pranayama" */,
+				2A1A65282D67FED70076E2C4 /* Release configuration for PBXProject "Pranayama" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		2A1A65242D67FED70076E2C4 /* Build configuration list for PBXNativeTarget "Pranayama" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				2A1A65252D67FED70076E2C4 /* Debug */,
-				2A1A65262D67FED70076E2C4 /* Release */,
+				2A1A65252D67FED70076E2C4 /* Debug configuration for PBXNativeTarget "Pranayama" */,
+				2A1A65262D67FED70076E2C4 /* Release configuration for PBXNativeTarget "Pranayama" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		2A1A65292D67FED70076E2C4 /* Build configuration list for PBXNativeTarget "PranayamaTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				2A1A652A2D67FED70076E2C4 /* Debug */,
-				2A1A652B2D67FED70076E2C4 /* Release */,
+				2A1A652A2D67FED70076E2C4 /* Debug configuration for PBXNativeTarget "PranayamaTests" */,
+				2A1A652B2D67FED70076E2C4 /* Release configuration for PBXNativeTarget "PranayamaTests" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		2A1A652C2D67FED70076E2C4 /* Build configuration list for PBXNativeTarget "PranayamaUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				2A1A652D2D67FED70076E2C4 /* Debug */,
-				2A1A652E2D67FED70076E2C4 /* Release */,
+				2A1A652D2D67FED70076E2C4 /* Debug configuration for PBXNativeTarget "PranayamaUITests" */,
+				2A1A652E2D67FED70076E2C4 /* Release configuration for PBXNativeTarget "PranayamaUITests" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
