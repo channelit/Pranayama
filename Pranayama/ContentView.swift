@@ -51,6 +51,7 @@ struct SettingsView: View {
             List {
                 Section("Breathing Level") {
                     Picker("Level", selection: $breathLevel) {
+                        Text("Level 0 (2-8-4)").tag(0)
                         Text("Level 1 (4-16-8)").tag(1)
                         Text("Level 2 (5-20-10)").tag(2)
                         Text("Level 3 (8-32-16)").tag(3)

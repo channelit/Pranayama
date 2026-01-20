@@ -1,5 +1,18 @@
 import SwiftUI
 import UIKit
+import AVFoundation
+import AudioToolbox
+
+// Inline fallback sound helper to ensure availability within this file
+final class InlineSoundPlayer {
+    static let shared = InlineSoundPlayer()
+    private init() {
+        // Configure audio session to ambient so it mixes and stays unobtrusive
+        try? AVAudioSession.sharedInstance().setCategory(.ambient, mode: .default, options: [.mixWithOthers])
+    }
+    func playPhase() { AudioServicesPlaySystemSound(1106) }
+    func playCompletion() { AudioServicesPlaySystemSound(1112) }
+}
 
 enum BreathingPhase: String {
     case inhale = "Inhale"
@@ -16,6 +29,7 @@ struct BreathingLevel: Identifiable, Equatable {
 }
 
 private let levels: [BreathingLevel] = [
+    .init(id: 0, inhale: 2, hold: 8, exhale: 4, title: "Level 0 (2-8-4)"),
     .init(id: 1, inhale: 4, hold: 16, exhale: 8, title: "Level 1 (4-16-8)"),
     .init(id: 2, inhale: 5, hold: 20, exhale: 10, title: "Level 2 (5-20-10)"),
     .init(id: 3, inhale: 8, hold: 32, exhale: 16, title: "Level 3 (8-32-16)")
@@ -34,6 +48,7 @@ struct BreathingTimerView: View {
 
     private let phaseImpact = UIImpactFeedbackGenerator(style: .light)
     private let completionNotifier = UINotificationFeedbackGenerator()
+    private let sound = InlineSoundPlayer.shared
 
     private var currentLevel: BreathingLevel {
         levels.first(where: { $0.id == breathLevel }) ?? levels[0]
@@ -57,6 +72,7 @@ struct BreathingTimerView: View {
 
     private func phaseChangedHaptic() {
         phaseImpact.impactOccurred()
+        sound.playPhase()
     }
 
     private func start() {
@@ -104,6 +120,7 @@ struct BreathingTimerView: View {
             if completedCycles >= max(targetCycles, 1) {
                 isCompleted = true
                 completionNotifier.notificationOccurred(.success)
+                sound.playCompletion()
                 pause()
                 return
             }
@@ -190,6 +207,7 @@ struct BreathingTimerView: View {
             completedCycles = 0; isCompleted = false
             phaseImpact.prepare()
             completionNotifier.prepare()
+            _ = sound
         }
         .navigationTitle(isCompleted ? "Completed" : "Breathing")
     }
@@ -198,3 +216,4 @@ struct BreathingTimerView: View {
 #Preview {
     BreathingTimerView()
 }
+
