@@ -3,6 +3,10 @@ import UIKit
 import AVFoundation
 import AudioToolbox
 
+#if canImport(ActivityKit)
+import ActivityKit
+#endif
+
 // Inline fallback sound helper to ensure availability within this file
 final class InlineSoundPlayer {
     static let shared = InlineSoundPlayer()
@@ -37,7 +41,7 @@ private let levels: [BreathingLevel] = [
 
 struct BreathingTimerView: View {
     @AppStorage("breathLevel") private var breathLevel: Int = 1
-    @AppStorage("targetCycles") private var targetCycles: Int = 4
+    @AppStorage("targetSets") private var targetSets: Int = 4
 
     @State private var phase: BreathingPhase = .inhale
     @State private var remaining: Int = 0
@@ -45,6 +49,17 @@ struct BreathingTimerView: View {
     @State private var timer: Timer? = nil
     @State private var completedCycles: Int = 0
     @State private var isCompleted: Bool = false
+
+    private var targetCycles: Int { targetSets * 2 }
+    private var completedSets: Int { completedCycles / 2 }
+
+    private var livePhase: LiveActivityPhase {
+        switch phase {
+        case .inhale: return .inhale
+        case .hold: return .hold
+        case .exhale: return .exhale
+        }
+    }
 
     private let phaseImpact = UIImpactFeedbackGenerator(style: .light)
     private let completionNotifier = UINotificationFeedbackGenerator()
@@ -75,9 +90,59 @@ struct BreathingTimerView: View {
         sound.playPhase()
     }
 
+    private func totalRemainingSessionSeconds() -> Int {
+        // Remaining in current phase + remaining cycles
+        let level = currentLevel
+        var total = remaining
+        switch phase {
+        case .inhale:
+            total += 0
+        case .hold:
+            total += 0
+        case .exhale:
+            total += 0
+        }
+        // Add the rest of the phases for the current cycle
+        switch phase {
+        case .inhale:
+            total += level.hold + level.exhale
+        case .hold:
+            total += level.exhale
+        case .exhale:
+            total += 0
+        }
+        // Add full cycles remaining after current one
+        let cyclesLeft = max(targetCycles, 1) - completedCycles - (phase == .exhale && remaining == 0 ? 1 : 0)
+        if cyclesLeft > 0 {
+            total += cyclesLeft * (level.inhale + level.hold + level.exhale)
+        }
+        return max(total, 0)
+    }
+
+    private func updateLiveActivity() {
+        let progress = BreathingProgress(
+            currentCycle: completedCycles,
+            targetCycles: max(targetCycles, 1),
+            phase: livePhase,
+            remaining: max(remaining, 0)
+        )
+        let remainingTotal = totalRemainingSessionSeconds()
+        LiveActivityManager.shared.update(progress: progress, remainingTotalSeconds: remainingTotal)
+    }
+
     private func start() {
         if remaining == 0 { remaining = phaseDuration }
         isRunning = true
+        #if canImport(ActivityKit)
+        let initialProgress = BreathingProgress(
+            currentCycle: completedCycles,
+            targetCycles: max(targetCycles, 1),
+            phase: livePhase,
+            remaining: max(remaining == 0 ? phaseDuration : remaining, 0)
+        )
+        let total = totalRemainingSessionSeconds()
+        LiveActivityManager.shared.start(progress: initialProgress, durationSeconds: max(total, 1))
+        #endif
         scheduleTimer()
     }
 
@@ -85,6 +150,9 @@ struct BreathingTimerView: View {
         isRunning = false
         timer?.invalidate()
         timer = nil
+        #if canImport(ActivityKit)
+        LiveActivityManager.shared.end(success: false)
+        #endif
     }
 
     private func reset() {
@@ -93,6 +161,9 @@ struct BreathingTimerView: View {
         remaining = 0
         completedCycles = 0
         isCompleted = false
+        #if canImport(ActivityKit)
+        LiveActivityManager.shared.end(success: false)
+        #endif
     }
 
     private func scheduleTimer() {
@@ -111,25 +182,31 @@ struct BreathingTimerView: View {
             withAnimation(.linear(duration: 0.2)) {
                 remaining -= 1
             }
+            updateLiveActivity()
             return
         }
         // remaining == 0: immediately advance phase within the same tick
         if phase == .exhale {
             completedCycles += 1
             phaseChangedHaptic()
-            if completedCycles >= max(targetCycles, 1) {
+            if completedCycles >= targetCycles {
                 isCompleted = true
                 completionNotifier.notificationOccurred(.success)
                 sound.playCompletion()
+                #if canImport(ActivityKit)
+                LiveActivityManager.shared.end(success: true)
+                #endif
                 pause()
                 return
             }
             phase = .inhale
             remaining = phaseDuration
+            updateLiveActivity()
         } else {
             phase = nextPhase(after: phase)
             phaseChangedHaptic()
             remaining = phaseDuration
+            updateLiveActivity()
         }
     }
 
@@ -149,11 +226,26 @@ struct BreathingTimerView: View {
         }
     }
 
+    private var currentNostrilIsLeft: Bool {
+        completedCycles % 2 == 0
+    }
+
     var body: some View {
         VStack(spacing: 24) {
-            Text("Cycle: \(completedCycles) / \(max(targetCycles, 1))")
-                .font(.headline)
-                .padding(.top)
+            VStack(spacing: 6) {
+                Text("Set: \(completedSets + 1) / \(max(targetSets, 1))")
+                    .font(.headline)
+                    .padding(.top)
+                HStack(spacing: 6) {
+                    Image(systemName: currentNostrilIsLeft ? "arrow.left.circle" : "arrow.right.circle")
+                        .font(.title2)
+                        .foregroundColor(currentNostrilIsLeft ? .green : .blue)
+                        .accessibilityLabel(currentNostrilIsLeft ? "Left nostril" : "Right nostril")
+                    Text(currentNostrilIsLeft ? "Left nostril" : "Right nostril")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
+            }
             Spacer()
             ZStack {
                 Circle()
@@ -197,7 +289,7 @@ struct BreathingTimerView: View {
             .padding(.bottom)
         }
         .onChange(of: breathLevel) { _, _ in
-            // when level changes, reset to start of cycle
+            // when level changes, reset to start of set
             reset()
             remaining = phaseDuration
         }

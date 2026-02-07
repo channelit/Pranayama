@@ -6,6 +6,10 @@
 	objectVersion = 90;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		2A57A4422F211B3B005353DA /* LiveActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A57A4412F211B3B005353DA /* LiveActivityManager.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		2A1A65122D67FED70076E2C4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		2A1A64FD2D67FED60076E2C4 /* Pranayama.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pranayama.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A1A65112D67FED70076E2C4 /* PranayamaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PranayamaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A1A651B2D67FED70076E2C4 /* PranayamaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PranayamaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A57A4412F211B3B005353DA /* LiveActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -86,6 +91,7 @@
 				2A1A65142D67FED70076E2C4 /* PranayamaTests */,
 				2A1A651E2D67FED70076E2C4 /* PranayamaUITests */,
 				2A1A64FE2D67FED60076E2C4 /* Products */,
+				2A57A4412F211B3B005353DA /* LiveActivityManager.swift */,
 			);
 			sourceTree = "<group>";
 			usesTabs = 0;
@@ -231,6 +237,7 @@
 		2A1A64F92D67FED60076E2C4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			files = (
+				2A57A4422F211B3B005353DA /* LiveActivityManager.swift in Sources */,
 			);
 		};
 		2A1A650D2D67FED70076E2C4 /* Sources */ = {
@@ -267,7 +274,7 @@
 				CODE_SIGN_ENTITLEMENTS = Pranayama/Pranayama.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Pranayama/Preview Content\"";
 				DEVELOPMENT_TEAM = 6ENEJ8H885;
 				ENABLE_APP_SANDBOX = YES;
@@ -284,7 +291,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = CITS.Pranayama;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -302,7 +309,7 @@
 				CODE_SIGN_ENTITLEMENTS = Pranayama/Pranayama.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Pranayama/Preview Content\"";
 				DEVELOPMENT_TEAM = 6ENEJ8H885;
 				ENABLE_APP_SANDBOX = YES;
@@ -319,7 +326,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = CITS.Pranayama;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

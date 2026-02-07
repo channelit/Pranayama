@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import UIKit
 
 @main
 struct PranayamaApp: App {
@@ -30,3 +31,4 @@ struct PranayamaApp: App {
         .modelContainer(sharedModelContainer)
     }
 }
+

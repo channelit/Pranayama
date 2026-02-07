@@ -1,7 +1,10 @@
 import SwiftUI
+import UIKit
 
 struct ContentView: View {
     @AppStorage("breathLevel") private var breathLevel: Int = 1
+    @AppStorage("keepAwake") private var keepAwake: Bool = true
+    @Environment(\.scenePhase) private var scenePhase
     @State private var showSplash: Bool = true
     @State private var showSettings: Bool = false
 
@@ -31,6 +34,14 @@ struct ContentView: View {
             }
         }
         .onAppear {
+            // Migrate old targetCycles key to targetSets if needed
+            let defaults = UserDefaults.standard
+            if defaults.object(forKey: "targetCycles") != nil && defaults.object(forKey: "targetSets") == nil {
+                let oldValue = defaults.integer(forKey: "targetCycles")
+                defaults.set(oldValue, forKey: "targetSets")
+                defaults.removeObject(forKey: "targetCycles")
+            }
+
             // Dismiss splash after a short delay
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.6) {
                 withAnimation(.easeInOut(duration: 0.4)) {
@@ -38,13 +49,29 @@ struct ContentView: View {
                 }
             }
         }
+        .onChange(of: scenePhase) { _, newPhase in
+            if newPhase == .active {
+                UIApplication.shared.isIdleTimerDisabled = keepAwake
+            } else {
+                UIApplication.shared.isIdleTimerDisabled = false
+            }
+        }
+        .onChange(of: keepAwake) { _, newValue in
+            if scenePhase == .active {
+                UIApplication.shared.isIdleTimerDisabled = newValue
+            }
+        }
+        .onDisappear {
+            UIApplication.shared.isIdleTimerDisabled = false
+        }
     }
 }
 
 struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @AppStorage("breathLevel") private var breathLevel: Int = 1
-    @AppStorage("targetCycles") private var targetCycles: Int = 4
+    @AppStorage("targetSets") private var targetSets: Int = 4
+    @AppStorage("keepAwake") private var keepAwake: Bool = true
 
     var body: some View {
         NavigationStack {
@@ -59,9 +86,20 @@ struct SettingsView: View {
                     .pickerStyle(.inline)
                 }
 
-                Section("Target Cycles") {
-                    Stepper(value: $targetCycles, in: 1...100) {
-                        Text("\(targetCycles) cycles")
+                Section("Target Sets") {
+                    Stepper(value: $targetSets, in: 1...100) {
+                        Text("\(targetSets) sets")
+                    }
+                }
+
+                Section("Screen") {
+                    Toggle(isOn: $keepAwake) {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Keep screen awake during session")
+                            Text("Prevents auto-lock while the app is active.")
+                                .font(.footnote)
+                                .foregroundStyle(.secondary)
+                        }
                     }
                 }
 
