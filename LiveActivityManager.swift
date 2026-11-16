@@ -26,6 +26,14 @@ struct BreathingAttributes: ActivityAttributes {
     var version: String = "1.1"
 }
 
+/// ActivityKit's `Activity` is not marked `Sendable`, but its async `update`/`end`
+/// methods are documented as safe to call from any context (including the background).
+/// This wrapper lets us hand the activity to a detached task under Swift 6 strict concurrency.
+private struct SendableActivity: @unchecked Sendable {
+    let value: Activity<BreathingAttributes>
+}
+
+@MainActor
 final class LiveActivityManager {
     static let shared = LiveActivityManager()
     private init() {}
@@ -61,19 +69,24 @@ final class LiveActivityManager {
             startedAt: activity.content.state.startedAt,
             expectedEnd: now.addingTimeInterval(TimeInterval(remainingTotalSeconds))
         )
-        Task { await activity.update(ActivityContent(state: update, staleDate: nil)) }
+        let handle = SendableActivity(value: activity)
+        Task.detached {
+            await handle.value.update(ActivityContent(state: update, staleDate: nil))
+        }
     }
 
     func end(success: Bool) {
         guard let activity else { return }
         let finalState = activity.content.state
-        Task {
-            await activity.end(ActivityContent(state: finalState, staleDate: nil), dismissalPolicy: .immediate)
+        let handle = SendableActivity(value: activity)
+        Task.detached {
+            await handle.value.end(ActivityContent(state: finalState, staleDate: nil), dismissalPolicy: .immediate)
         }
         self.activity = nil
     }
 }
 #else
+@MainActor
 final class LiveActivityManager {
     static let shared = LiveActivityManager()
     private init() {}
